@@ -1,0 +1,16 @@
+{
+  "name": "io-std",
+  "private": true,
+  "homepage": "https://github.com/pagopa/io-std#readme",
+  "bugs": {
+    "url": "https://github.com/pagopa/io-std/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagopa/io-std.git"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {}
+}
