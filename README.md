@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-In order to run the `io-sign` back-end/front-end locally you need the following tool installed on your machine.
+In order to run the project locally you need the following tool installed on your machine.
 
 - `Node.js 18`
 - `npm`
