@@ -1,6 +1,9 @@
-node_modules.yarn/*
 node_modules
+dist
+.eslintcache
 .turbo
+coverage
+
 .pnp.*
 .yarn/*
 !.yarn/patches
