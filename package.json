@@ -5,6 +5,9 @@
   "bugs": {
     "url": "https://github.com/pagopa/io-std/issues"
   },
+  "scripts": {
+    "build": "turbo run build --no-daemon"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pagopa/io-std.git"
@@ -12,6 +15,8 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {}
   "packageManager": "yarn@3.4.1",
+  "devDependencies": {
+    "turbo": "^1.8.3"
+  }
 }
