@@ -2486,7 +2486,7 @@ __metadata:
   resolution: "io-std@workspace:."
   dependencies:
     "@changesets/cli": ^2.26.0
-    turbo: ^1.8.3
+    turbo: ^1.8.5
   languageName: unknown
   linkType: soft
 
@@ -4510,7 +4510,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo@npm:^1.8.3":
+"turbo@npm:^1.8.5":
   version: 1.8.5
   resolution: "turbo@npm:1.8.5"
   dependencies:
