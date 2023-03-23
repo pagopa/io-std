@@ -1,5 +1,0 @@
-{
-  "all": true,
-  "reporter": ["lcov", "text"],
-  "include": ["packages/*/dist/**/*.{js,cjs,mjs,ts}"]
-}
