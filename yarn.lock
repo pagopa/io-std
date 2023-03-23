@@ -809,9 +809,7 @@ __metadata:
   dependencies:
     "@pagopa/eslint-config": ^3.0.0
     "@rushstack/eslint-patch": ^1.2.0
-    "@types/fast-redact": ^3.0.2
     "@vitest/coverage-c8": ^0.29.2
-    "@vitest/ui": ^0.29.7
     eslint: ^8.36.0
     fp-ts: ^2.13.1
     prettier: 2.8.4
@@ -820,13 +818,6 @@ __metadata:
     vitest: ^0.29.2
   languageName: unknown
   linkType: soft
-
-"@polka/url@npm:^1.0.0-next.20":
-  version: 1.0.0-next.21
-  resolution: "@polka/url@npm:1.0.0-next.21"
-  checksum: c7654046d38984257dd639eab3dc770d1b0340916097b2fac03ce5d23506ada684e05574a69b255c32ea6a144a957c8cd84264159b545fca031c772289d88788
-  languageName: node
-  linkType: hard
 
 "@rushstack/eslint-patch@npm:^1.2.0":
   version: 1.2.0
@@ -855,13 +846,6 @@ __metadata:
   version: 4.3.4
   resolution: "@types/chai@npm:4.3.4"
   checksum: 571184967beb03bf64c4392a13a7d44e72da9af5a1e83077ff81c39cf59c0fda2a5c78d2005084601cf8f3d11726608574d8b5b4a0e3e9736792807afd926cd0
-  languageName: node
-  linkType: hard
-
-"@types/fast-redact@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@types/fast-redact@npm:3.0.2"
-  checksum: d53f271ef024aebe292d0fad7863554ba3d7ad930faa7c53d3cc5b7c059639b579de5775f9944b6be7cb4ae878da8a78df1b8f9c1de9b803026c176dd067ceb0
   languageName: node
   linkType: hard
 
@@ -1099,19 +1083,6 @@ __metadata:
   dependencies:
     tinyspy: ^1.0.2
   checksum: e8225a833c168c760a7e9a36c982b4c79861c4fc9748048a718e1550894cddf9e42bad5ec4ff97aa1f36e204caeb05e2e95b4d8363327e33c35ca373f9b063a3
-  languageName: node
-  linkType: hard
-
-"@vitest/ui@npm:^0.29.7":
-  version: 0.29.7
-  resolution: "@vitest/ui@npm:0.29.7"
-  dependencies:
-    fast-glob: ^3.2.12
-    flatted: ^3.2.7
-    pathe: ^1.1.0
-    picocolors: ^1.0.0
-    sirv: ^2.0.2
-  checksum: 0708ccaab3fc07fe3e430158355803be7ce998e34d7e04391f43f78b5d8a12f5b747277eb36b673bd972dc45d509bbd98d23b06ed27669da4e31b7438df9e4cc
   languageName: node
   linkType: hard
 
@@ -2693,7 +2664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.9":
   version: 3.2.12
   resolution: "fast-glob@npm:3.2.12"
   dependencies:
@@ -2787,7 +2758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flatted@npm:^3.1.0, flatted@npm:^3.2.7":
+"flatted@npm:^3.1.0":
   version: 3.2.7
   resolution: "flatted@npm:3.2.7"
   checksum: 427633049d55bdb80201c68f7eb1cbd533e03eac541f97d3aecab8c5526f12a20ccecaeede08b57503e772c769e7f8680b37e8d482d1e5f8d7e2194687f9ea35
@@ -4116,13 +4087,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mrmime@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "mrmime@npm:1.0.1"
-  checksum: cc979da44bbbffebaa8eaf7a45117e851f2d4cb46a3ada6ceb78130466a04c15a0de9a9ce1c8b8ba6f6e1b8618866b1352992bf1757d241c0ddca558b9f28a77
-  languageName: node
-  linkType: hard
-
 "ms@npm:2.1.2":
   version: 2.1.2
   resolution: "ms@npm:2.1.2"
@@ -5065,17 +5029,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sirv@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "sirv@npm:2.0.2"
-  dependencies:
-    "@polka/url": ^1.0.0-next.20
-    mrmime: ^1.0.0
-    totalist: ^3.0.0
-  checksum: 6982f8ecee9392d246d7eeea8144e50334fe1b46a4fa942995a844ea88c2d518b17cce781bb09926c9a5692a7002a207d18dfd67af2aa538a15e733dc2042298
-  languageName: node
-  linkType: hard
-
 "slash@npm:^3.0.0":
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
@@ -5515,13 +5468,6 @@ __metadata:
   dependencies:
     is-number: ^7.0.0
   checksum: f76fa01b3d5be85db6a2a143e24df9f60dd047d151062d0ba3df62953f2f697b16fe5dad9b0ac6191c7efc7b1d9dcaa4b768174b7b29da89d4428e64bc0a20ed
-  languageName: node
-  linkType: hard
-
-"totalist@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "totalist@npm:3.0.0"
-  checksum: ec499bddfc73d5b6c73f8ff68afd7bed286705797f928a11177fee5d1ee80e9052ffcb434638437702e16864bd5490f437a54f79bfea9564e875d34ed3254bca
   languageName: node
   linkType: hard
 
