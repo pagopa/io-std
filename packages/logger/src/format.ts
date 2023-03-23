@@ -24,7 +24,7 @@ export const json: Logger["format"] = ({
         JSON.stringify({ timestamp, level, message, ...context }, jsonReplacer),
       identity
     ),
-    E.getOrElse((e) =>
+    E.getOrElse(() =>
       // JSON.stringify here doesn't throws because "context" has been removed
       // and the other properties are simple primitives
       JSON.stringify(

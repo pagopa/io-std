@@ -31,7 +31,7 @@ describe("json", () => {
     );
   });
   it<FormatTestContext>("recovers for serialization error with a fallback entry", (ctx) => {
-    let circular: any = {
+    const circular: any = {
       foo: "bar",
     };
     circular.circular = circular;
@@ -72,7 +72,7 @@ describe("simple", () => {
     );
   });
   it<FormatTestContext>("recovers for serialization error with a fallback entry", (ctx) => {
-    let circular: any = {
+    const circular: any = {
       foo: "bar",
     };
     circular.circular = circular;
