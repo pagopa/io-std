@@ -44,3 +44,9 @@ jobs:
 
       - name: "Code review"
         run: yarn run code-review
+
+      - name: "Coverage"
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
+        with:
+          fail_ci_if_error: true
+          verbose: true
