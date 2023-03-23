@@ -1,0 +1,30 @@
+{
+  "name": "@pagopa/logger",
+  "version": "1.0.0",
+  "homepage": "https://github.com/pagopa/io-std#readme",
+  "bugs": {
+    "url": "https://github.com/pagopa/io-std/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagopa/io-std.git"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsup-node",
+    "format": "prettier --write .",
+    "test": "vitest run --coverage"
+  },
+  "dependencies": {
+    "fp-ts": "^2.13.1",
+    "tsup": "^6.6.3"
+  },
+  "devDependencies": {
+    "@types/fast-redact": "^3.0.2",
+    "@vitest/coverage-c8": "^0.29.2",
+    "@vitest/ui": "^0.29.7",
+    "prettier": "2.8.4",
+    "typescript": "^5.0.2",
+    "vitest": "^0.29.2"
+  }
+}
