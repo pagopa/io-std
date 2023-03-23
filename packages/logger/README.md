@@ -36,11 +36,11 @@ const greet = (name: string) => pipe(
   RTE.right(name),
   RTE.chainFirst((name) => L.infoRTE("greet called", { name }))
   RTE.map(name => `Hello ${name}`),
-)
+);
 
-greet({
+greet("robert")({
   logger: ConsoleLogger,
-})("robert");
+});
 ```
 
 When executed this code prints
