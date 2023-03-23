@@ -6,7 +6,8 @@
     "url": "https://github.com/pagopa/io-std/issues"
   },
   "scripts": {
-    "build": "turbo run build --no-daemon"
+    "build": "turbo run build --no-daemon",
+    "code-review": "turbo run typecheck lint test --no-daemon"
   },
   "repository": {
     "type": "git",
