@@ -5,6 +5,22 @@
       "inputs": ["src/**/*.ts", "tsup.config.js"],
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
+    },
+    "test": {
+      "inputs": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+      "outputs": [],
+      "outputMode": "hash-only",
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      "inputs": ["src/**/*.ts"],
+      "outputs": [],
+      "dependsOn": ["^build"]
+    },
+    "typecheck": {
+      "inputs": ["src/**/*.ts"],
+      "outputs": [],
+      "dependsOn": ["^build"]
     }
   }
 }
