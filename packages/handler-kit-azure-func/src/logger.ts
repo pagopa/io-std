@@ -2,6 +2,7 @@ import * as azure from "@azure/functions";
 
 import * as L from "@pagopa/logger";
 
+// Derive a concrete implementation L.Logger using azure.Context.log
 export const getLogger = (ctx: azure.Context): L.Logger => ({
   log: (s, level) => () => {
     const logFunc: Record<typeof level, (s: string) => void> = {

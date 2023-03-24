@@ -20,6 +20,7 @@ const hasLogger = <R, I>(
 ): u is R & { logger: L.Logger } & H.HandlerEnvironment<I> =>
   typeof u === "object" && u !== null && "logger" in u;
 
+// Populates Handler dependencies reading from azure.Context
 const azureFunctionTE = <I, A, R>(
   h: H.Handler<I, A, R>,
   deps: Omit<R, "logger"> & { inputDecoder: t.Decoder<unknown, I> }
@@ -35,6 +36,8 @@ const azureFunctionTE = <I, A, R>(
     TE.chainW(h)
   );
 
+// Adapts an Handler to an Azure Function that can be triggered by
+// queueTrigger, cosmosDBTrigger, eventsHubTrigger and other event-based binding
 export const azureFunction =
   <I, A, R>(h: H.Handler<I, A, R>) =>
   (
@@ -86,6 +89,9 @@ const toAzureHttpResponse = (
   headers: res.headers,
 });
 
+// Prevent HTTP triggered Azure Functions from crashing
+// If an handler returns with an error (RTE.left),
+// logs it and show an Internal Server Error.
 const logErrorAndReturnHttpResponse = (e: Error) =>
   flow(
     L.error("uncaught error from handler", { error: e }),
@@ -99,6 +105,8 @@ const logErrorAndReturnHttpResponse = (e: Error) =>
     )
   );
 
+// Adapts an HTTP Handler to an Azure Function that is triggered by HTTP,
+// wiring automatically the HttpRequest inputDecoder and  the logger
 export const httpAzureFunction =
   <R>(
     h: H.Handler<H.HttpRequest, H.HttpResponse<unknown, H.HttpStatusCode>, R>
