@@ -820,8 +820,8 @@ __metadata:
   dependencies:
     "@azure/functions": ^3.5.0
     "@pagopa/eslint-config": ^3.0.0
-    "@pagopa/handler-kit": ^0.9.0
-    "@pagopa/logger": ^0.9.0
+    "@pagopa/handler-kit": ^1.0.0
+    "@pagopa/logger": ^1.0.0
     "@rushstack/eslint-patch": ^1.2.0
     "@vitest/coverage-c8": ^0.29.2
     eslint: ^8.36.0
@@ -834,12 +834,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/handler-kit@^0.9.0, @pagopa/handler-kit@workspace:packages/handler-kit":
+"@pagopa/handler-kit@^1.0.0, @pagopa/handler-kit@workspace:packages/handler-kit":
   version: 0.0.0-use.local
   resolution: "@pagopa/handler-kit@workspace:packages/handler-kit"
   dependencies:
     "@pagopa/eslint-config": ^3.0.0
-    "@pagopa/logger": ^0.9.0
+    "@pagopa/logger": ^1.0.0
     "@rushstack/eslint-patch": ^1.2.0
     "@vitest/coverage-c8": ^0.29.2
     eslint: ^8.36.0
@@ -852,7 +852,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/logger@^0.9.0, @pagopa/logger@workspace:packages/logger":
+"@pagopa/logger@^1.0.0, @pagopa/logger@workspace:packages/logger":
   version: 0.0.0-use.local
   resolution: "@pagopa/logger@workspace:packages/logger"
   dependencies:
