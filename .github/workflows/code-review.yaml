@@ -42,5 +42,14 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Build the project
+        run: yarn build
+
       - name: "Code review"
         run: yarn run code-review
+
+      - name: "Coverage"
+        run: yarn coverage
+
+      - name: "Upload to codecov.io"
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
