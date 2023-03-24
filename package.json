@@ -10,6 +10,7 @@
     "test": "turbo run test --no-daemon",
     "coverage": "c8 test --ci",
     "code-review": "turbo run typecheck lint test --no-daemon",
+    "version": "yarn changeset version && yarn --mode update-lockfile",
     "release": "yarn build && changeset publish"
   },
   "repository": {

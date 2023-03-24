@@ -28,7 +28,7 @@ jobs:
         id: changesets
         uses: changesets/action@e9cc34b540dd3ad1b030c57fd97269e8f6ad905a
         with:
-          version: yarn changeset version && yarn --mode update-lockfile
+          version: yarn version
           publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
