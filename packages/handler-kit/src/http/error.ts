@@ -62,6 +62,7 @@ export const toProblemJson = (e: Error): ProblemJson => {
     return {
       title: e.title,
       status: e.status,
+      detail: e.message,
     };
   }
   return {
