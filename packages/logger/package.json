@@ -10,6 +10,9 @@
     "url": "git+https://github.com/pagopa/io-std.git"
   },
   "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup-node",
     "format": "prettier --write .",
