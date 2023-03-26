@@ -67,7 +67,7 @@ const GetMovies = H.of((req: H.HttpRequest) =>
     RTE.map((movies) => ({ items: movies })),
     // wrap in a 200 HTTP response, with content-type JSON
     RTE.map(H.successJson),
-    // converts Error instances to problem json (RFC 7808) objects
+    // converts Error instances to problem json (RFC 7807) objects
     RTE.orElseW(flow(H.toProblemJson, H.problemJson))
   )
 );
