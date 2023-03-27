@@ -19,15 +19,15 @@ export type Logger = {
 };
 
 /*
-Logs a message at the specified level.
-
-A Logger instance has:
-- "log" function, that actually perform the logging (wrapped in IO<void>)
-- an optional "Formatter" ("format" property) that serialzes the log record to string
-- an optional "context" that will be copied in each log record
-
-the default formatter is "json"
-the default context is {}
+** Logs a message at the specified level.
+ *
+ * A Logger instance has:
+ * - "log" function, that actually perform the logging (wrapped in IO<void>)
+ * - an optional "Formatter" ("format" property) that serialzes the log record to string
+ * - an optional "context" that will be copied in each log record
+ *
+ * the default formatter is "json"
+ * the default context is {}
 */
 export const log =
   (level: LogRecord["level"]) =>
