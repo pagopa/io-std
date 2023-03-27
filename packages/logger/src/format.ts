@@ -1,7 +1,7 @@
 import { pipe, identity } from "fp-ts/function";
 import * as E from "fp-ts/Either";
 
-import { Logger, LogRecord } from "./logger";
+import { Formatter } from "./logger";
 
 // Replaces Error instances with simple JS objects
 // It's needed because Error has no enumerable properties
@@ -12,12 +12,7 @@ const jsonReplacer = (_: string, value: unknown) => {
   return value;
 };
 
-export const json: Logger["format"] = ({
-  timestamp,
-  level,
-  message,
-  ...context
-}: LogRecord) =>
+export const json: Formatter = ({ timestamp, level, message, ...context }) =>
   pipe(
     E.tryCatch(
       () =>
@@ -39,7 +34,7 @@ export const json: Logger["format"] = ({
     )
   );
 
-export const simple: Logger["format"] = ({ level, message, ...extra }) =>
+export const simple: Formatter = ({ level, message, ...extra }) =>
   pipe(
     E.tryCatch(() => JSON.stringify(extra, jsonReplacer, 2), identity),
     E.getOrElse((e) =>
