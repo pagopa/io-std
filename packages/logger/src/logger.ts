@@ -19,7 +19,7 @@ export type Logger = {
 };
 
 /*
-** Logs a message at the specified level.
+ ** Logs a message at the specified level.
  *
  * A Logger instance has:
  * - "log" function, that actually perform the logging (wrapped in IO<void>)
@@ -28,7 +28,7 @@ export type Logger = {
  *
  * the default formatter is "json"
  * the default context is {}
-*/
+ */
 export const log =
   (level: LogRecord["level"]) =>
   (message: LogRecord["message"], context: Record<string, unknown> = {}) =>
