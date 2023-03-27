@@ -34,7 +34,7 @@ import { ConsoleLogger } from "./my-logger";
 
 const greet = (name: string) => pipe(
   RTE.right(name),
-  RTE.chainFirst((name) => L.infoRTE("greet called", { name }))
+  RTE.chainFirstW((name) => L.infoRTE("greet called", { name }))
   RTE.map(name => `Hello ${name}`),
 );
 

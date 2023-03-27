@@ -1,5 +1,6 @@
 import { beforeEach, describe, it, vi, expect } from "vitest";
 import { Logger, log, info } from "../logger";
+import { json } from "../format";
 
 type LogTestContext = {
   logger: Logger;
@@ -66,5 +67,21 @@ describe("log", () => {
       "info: testing the logging.log function",
       "info"
     );
+  });
+  it('sets "json" as default formatter', () => {
+    const timestamp = new Date("1995-07-14T11:16:13.000Z");
+    vi.setSystemTime(timestamp);
+    const loggerWithoutFormatter: Logger = {
+      log: vi.fn(() => () => {}),
+    };
+    info("testing the default formatter")({
+      logger: loggerWithoutFormatter,
+    });
+    const expected = json({
+      timestamp,
+      level: "info",
+      message: "testing the default formatter",
+    });
+    expect(loggerWithoutFormatter.log).toHaveBeenCalledWith(expected, "info");
   });
 });
