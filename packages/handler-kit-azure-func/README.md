@@ -18,12 +18,12 @@ const GetMovies = H.of((req: H.HttpRequest) =>
     H.parse(GetMoviesBody),
     E.map(({ genre }) => genre),
     RTE.fromEither,
-    RTE.chainTaskEither(getMoviesByGenre),
+    RTE.chainW(getMoviesByGenre),
     RTE.map((movies) => ({ items: movies })),
     // wrap in a 200 HTTP response, with content-type JSON
     RTE.map(H.successJson),
-    // convert Error instances to problem json (RFC 7808) objects
-    RTE.orElseW(flow(H.toProblemJson, H.problemJson))
+    // converts Error instances to problem json (RFC 7807) objects
+    RTE.orElseW(flow(H.toProblemJson, H.problemJson, RTE.of))
   )
 );
 
