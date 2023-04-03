@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 1.1.0
+
+### Minor Changes
+
+- a4f8ecb: Add support for cosmosDBTrigger
+
 ## 1.0.0
 
 ### Major Changes
