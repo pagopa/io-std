@@ -18,6 +18,7 @@ const FunctionTrigger = t.type({
     queueTrigger: null,
     blobTrigger: null,
     eventHubTrigger: null,
+    cosmosDBTrigger: null,
   }),
   direction: t.literal("in"),
   name: t.string,
