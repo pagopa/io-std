@@ -1,5 +1,13 @@
 # @pagopa/handler-kit-azure-func
 
+## 1.1.1
+
+### Patch Changes
+
+- cf6f784: Upgrade logger version to 1.0.1
+- Updated dependencies [cf6f784]
+  - @pagopa/handler-kit@1.0.1
+
 ## 1.1.0
 
 ### Minor Changes
