@@ -820,7 +820,7 @@ __metadata:
   dependencies:
     "@azure/functions": ^3.5.0
     "@pagopa/eslint-config": ^3.0.0
-    "@pagopa/handler-kit": ^1.0.0
+    "@pagopa/handler-kit": ^1.0.1
     "@pagopa/logger": ^1.0.1
     "@rushstack/eslint-patch": ^1.2.0
     "@vitest/coverage-c8": ^0.29.2
@@ -834,7 +834,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/handler-kit@^1.0.0, @pagopa/handler-kit@workspace:packages/handler-kit":
+"@pagopa/handler-kit@^1.0.1, @pagopa/handler-kit@workspace:packages/handler-kit":
   version: 0.0.0-use.local
   resolution: "@pagopa/handler-kit@workspace:packages/handler-kit"
   dependencies:

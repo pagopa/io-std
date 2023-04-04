@@ -1,5 +1,11 @@
 # @pagopa/handler-kit
 
+## 1.0.1
+
+### Patch Changes
+
+- cf6f784: Upgrade logger version to 1.0.1
+
 ## 1.0.0
 
 ### Major Changes
