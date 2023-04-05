@@ -852,7 +852,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/logger-express@workspace:^, @pagopa/logger-express@workspace:packages/logger-express":
+"@pagopa/logger-express@workspace:packages/logger-express":
   version: 0.0.0-use.local
   resolution: "@pagopa/logger-express@workspace:packages/logger-express"
   dependencies:
@@ -3746,7 +3746,6 @@ __metadata:
   resolution: "io-std@workspace:."
   dependencies:
     "@changesets/cli": ^2.26.0
-    "@pagopa/logger-express": "workspace:^"
     c8: ^7.13.0
     turbo: ^1.8.5
   languageName: unknown
