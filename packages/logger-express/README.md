@@ -52,3 +52,14 @@ app.get("/", (req, res) => {
 
 app.listen(3000);
 ```
+
+The access middleware supports a `skip` option
+
+```typescript
+app.use(
+  access({
+    // skip successful response
+    skip: (req, res) => res.statusCode === 200,
+  })
+);
+```
