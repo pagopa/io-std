@@ -38,15 +38,26 @@ GetMovies({
 })*/
 
 // just use "httpExpress"
-
-const GetMoviesRoute = httpExpress(GetMovies)({
+const GetMoviesExpress = httpExpress(GetMovies)({
   movies,
 });
+
+const ConsoleLogger: L.Logger = {
+  log: (r) => () => console.log(r),
+  format: L.format.json,
+};
 
 // now GetMoviesRoute can be called by the Express runtime
 const app = express.default();
 app.use(express.json());
-app.post("/", route);
+
+// decorate "req" with "log" function
+app.use(logger(ConsoleLogger));
+
+// enable HTTP request logging
+app.use(access());
+
+app.post("/", GetMoviesExpress);
 
 app.listen(3001, () => {
   // eslint-disable-next-line no-console
