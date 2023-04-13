@@ -87,7 +87,7 @@ const HttpRequestFromExpress = ExpressHttpRequestC.pipe(
 const toExpressResponse =
   (res: express.Response) =>
   (httpRes: H.HttpResponse<unknown, H.HttpStatusCode>): void => {
-    res.set(httpRes.headers).status(httpRes.statusCode).json(httpRes.body);
+    res.set(httpRes.headers).status(httpRes.statusCode).send(httpRes.body);
   };
 
 // Prevent and express handler from crashing
@@ -122,7 +122,7 @@ export const httpExpress =
       }),
       TE.getOrElseW((e) =>
         logErrorAndReturnHttpResponse(e)({
-          logger: getLogger(),
+          logger: getLogger(req),
         })
       ),
       T.map(toExpressResponse(res))
