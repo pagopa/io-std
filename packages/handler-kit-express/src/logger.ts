@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import * as L from "@pagopa/logger";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import * as LE from "@pagopa/logger-express";
+import type {} from "@pagopa/logger-express";
 
 // Derive a concrete implementation L.Logger using Express.Request.log, if present, otherwise using console
 export const getLogger = (req: Express.Request): L.Logger =>
