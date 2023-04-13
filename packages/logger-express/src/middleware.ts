@@ -14,6 +14,7 @@ declare global {
   namespace Express {
     export interface Request {
       log?: LogFunction;
+      logger?: L.Logger;
     }
   }
 }
@@ -25,6 +26,8 @@ export const logger =
     // eslint-disable-next-line functional/immutable-data
     req.log = (level, message, context) =>
       L.log(level)(message, context)({ logger: l })();
+    // eslint-disable-next-line functional/immutable-data
+    req.logger = l;
     next();
   };
 

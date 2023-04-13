@@ -37,7 +37,7 @@ describe("logger", () => {
       logFuncDefined: true,
     });
   });
-  it<TestContext>("wires correctly the logger", async (ctx) => {
+  it<TestContext>("wires correctly the log function", async (ctx) => {
     const app = express();
     app.use(logger(ctx.logger));
     app.get("/", (req, res) => {
@@ -49,6 +49,19 @@ describe("logger", () => {
       `{"timestamp":"1995-07-14T11:16:13.000Z","level":"info","message":"testing the log fn"}`,
       "info"
     );
+  });
+  it<TestContext>("wires correctly the logger", async (ctx) => {
+    const app = express();
+    app.use(logger(ctx.logger));
+    app.get("/", (req, res) => {
+      res.json({
+        hasLogger: typeof req.logger !== "undefined",
+      });
+    });
+    const res = await request(app).get("/");
+    expect(res.body).toEqual({
+      hasLogger: true,
+    });
   });
 });
 
