@@ -59,6 +59,8 @@ const HttpRequestC = new t.Type<
   })
 );
 
+// Transforms objects of type Record<string, string | string[]> to Record<string, string> type
+// Allows to adapt some ExpressHttpRequest's properties to H.HttpRequest's properties
 const toHttp = (obj: Record<string, string | string[]>) =>
   Object.entries(obj).reduce(
     (acc, [key, value]) => ({
