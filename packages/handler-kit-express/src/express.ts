@@ -12,7 +12,6 @@ import * as H from "@pagopa/handler-kit";
 import * as L from "@pagopa/logger";
 
 import * as express from "express";
-
 import { getLogger } from "./logger";
 
 const hasLogger = <R, I>(u: unknown): u is R & H.HandlerEnvironment<I> =>
@@ -25,7 +24,7 @@ const expressHandlerTE = <I, A, R>(
 ) =>
   flow(
     sequenceS(RE.Apply)({
-      logger: RE.fromReader(getLogger),
+      logger: getLogger,
       input: (req: express.Request) => E.right(req),
     }),
     TE.fromEither,
@@ -124,7 +123,16 @@ export const expressHandler =
       }),
       TE.getOrElseW((e) =>
         logErrorAndReturnHttpResponse(e)({
-          logger: getLogger(req),
+          logger: pipe(
+            req,
+            getLogger,
+            E.getOrElse(() => ({
+              log: (s: string, _level: L.LogRecord["level"]) => () => {
+                // eslint-disable-next-line no-console
+                console.error(s);
+              },
+            }))
+          ),
         })
       ),
       T.map(toExpressResponse(res))

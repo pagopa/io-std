@@ -35,7 +35,7 @@ describe("expressHandler", () => {
       lang: "it",
     });
     const app = express();
-    app.use(express.json()); // it is required to work
+    app.use(express.json());
     app.get("/greet", GreetFunction);
     await request(app).get("/greet?name=Silvia").expect(200, {
       message: "Ciao Silvia",
@@ -49,7 +49,7 @@ describe("expressHandler", () => {
       H.of((_) => RTE.left(new Error("unhandled error")))
     )({});
     const app = express();
-    app.use(express.json()); // it is required to work
+    app.use(express.json());
     app.use(logger(ConsoleLogger));
     app.get("/error", ErrorFunction);
     const response = await request(app).get("/error");
