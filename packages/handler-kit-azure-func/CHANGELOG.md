@@ -1,5 +1,15 @@
 # @pagopa/handler-kit-azure-func
 
+## 1.2.0
+
+### Minor Changes
+
+- 576341b: azureFunction now throws on error, in order to be compatible with retry mechanism of Azure
+
+### Patch Changes
+
+- 6550d4c: Now functions triggered by blobTrigger returns their metadata instead of the wrong payload
+
 ## 1.1.1
 
 ### Patch Changes
