@@ -7,13 +7,13 @@ import { pipe, flow } from "fp-ts/function";
 import { lookup } from "fp-ts/Record";
 
 import * as H from "@pagopa/handler-kit";
-import { httpExpress } from "../express";
+import { expressHandler } from "../express";
 import express from "express";
 import request from "supertest";
 import { logger } from "@pagopa/logger-express";
 import * as L from "@pagopa/logger";
 
-describe("httpExpress", () => {
+describe("expressHandler", () => {
   const GreetHandler = H.of((req: H.HttpRequest) =>
     pipe(
       req.query,
@@ -31,7 +31,7 @@ describe("httpExpress", () => {
     )
   );
   it("wires the http request correctly and returns the correct response", async () => {
-    const GreetFunction = httpExpress(GreetHandler)({
+    const GreetFunction = expressHandler(GreetHandler)({
       lang: "it",
     });
     const app = express();
@@ -45,7 +45,7 @@ describe("httpExpress", () => {
     const ConsoleLogger: L.Logger = {
       log: vi.fn((r) => () => {}),
     };
-    const ErrorFunction = httpExpress(
+    const ErrorFunction = expressHandler(
       H.of((_) => RTE.left(new Error("unhandled error")))
     )({});
     const app = express();
