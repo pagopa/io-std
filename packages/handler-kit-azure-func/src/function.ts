@@ -50,6 +50,7 @@ export const azureFunction =
     if (result instanceof Error) {
       throw result;
     }
+    return result;
   };
 
 const HttpRequestC = new t.Type<
