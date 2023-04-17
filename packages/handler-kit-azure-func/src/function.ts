@@ -43,8 +43,15 @@ export const azureFunction =
   (
     deps: Omit<R, "logger"> & { inputDecoder: t.Decoder<unknown, I> }
   ): azure.AzureFunction =>
-  (ctx) =>
-    pipe(ctx, azureFunctionTE(h, deps), TE.toUnion)();
+  (ctx) => {
+    const result = pipe(ctx, azureFunctionTE(h, deps), TE.toUnion)();
+    // we have to throws here to ensure that "retry" mechanism of Azure
+    // can be executed
+    if (result instanceof Error) {
+      throw result;
+    }
+    return result;
+  };
 
 const HttpRequestC = new t.Type<
   H.HttpRequest,
