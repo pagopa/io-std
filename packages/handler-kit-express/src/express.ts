@@ -110,7 +110,7 @@ const logErrorAndReturnHttpResponse = (e: Error) =>
 
 // Adapts an HTTP Handler to an Azure Function that is triggered by HTTP,
 // wiring automatically the HttpRequest inputDecoder and  the logger
-export const httpExpress =
+export const expressHandler =
   <R>(
     h: H.Handler<H.HttpRequest, H.HttpResponse<unknown, H.HttpStatusCode>, R>
   ) =>

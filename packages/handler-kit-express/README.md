@@ -5,7 +5,7 @@
 ### How to use it
 
 ```typescript
-import { httpExpress } from "@pagopa/handler-kit-express";
+import { expressHandler } from "@pagopa/handler-kit-express";
 
 // Given an Handler
 // (from the @pagopa/handler README example)
@@ -37,8 +37,8 @@ GetMovies({
   movies: ...
 })*/
 
-// just use "httpExpress"
-const GetMoviesExpress = httpExpress(GetMovies)({
+// just use "expressHandler"
+const GetMoviesExpress = expressHandler(GetMovies)({
   movies,
 });
 
