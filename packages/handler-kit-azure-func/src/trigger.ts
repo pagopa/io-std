@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 
-import { flow, pipe, identity } from "fp-ts/function";
+import { flow, pipe } from "fp-ts/function";
 
 import { lookup } from "fp-ts/Record";
 
@@ -45,18 +45,14 @@ export class BindingNotFoundError extends Error {
 }
 
 const getBindings = (t: FunctionTrigger) => (ctx: azure.Context) => {
-  switch (t.type) {
-    case "blobTrigger":
-      return E.right(ctx.bindingData);
-    default:
-      return pipe(
-        ctx.bindings,
-        lookup(t.name),
-        E.fromOption(
-          (): Error => new BindingNotFoundError(t.name, ctx.bindings)
-        )
-      );
+  if (t.type === "blobTrigger") {
+    return E.right(ctx.bindingData);
   }
+  return pipe(
+    ctx.bindings,
+    lookup(t.name),
+    E.fromOption((): Error => new BindingNotFoundError(t.name, ctx.bindings))
+  );
 };
 
 export const getTriggerBindingData = flow(
