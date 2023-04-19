@@ -710,8 +710,8 @@ __metadata:
   resolution: "@pagopa/handler-kit-express@workspace:packages/handler-kit-express"
   dependencies:
     "@pagopa/eslint-config": ^3.0.0
-    "@pagopa/handler-kit": ^1.0.0
-    "@pagopa/logger": ^1.0.0
+    "@pagopa/handler-kit": ^1.0.1
+    "@pagopa/logger": ^1.0.1
     "@pagopa/logger-express": ^1.1.0
     "@rushstack/eslint-patch": ^1.2.0
     "@types/express": ^4.17.17
@@ -729,7 +729,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/handler-kit@^1.0.0, @pagopa/handler-kit@^1.0.1, @pagopa/handler-kit@workspace:packages/handler-kit":
+"@pagopa/handler-kit@^1.0.1, @pagopa/handler-kit@workspace:packages/handler-kit":
   version: 0.0.0-use.local
   resolution: "@pagopa/handler-kit@workspace:packages/handler-kit"
   dependencies:
@@ -782,7 +782,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/logger@^1.0.0, @pagopa/logger@^1.0.1, @pagopa/logger@workspace:packages/logger":
+"@pagopa/logger@^1.0.1, @pagopa/logger@workspace:packages/logger":
   version: 0.0.0-use.local
   resolution: "@pagopa/logger@workspace:packages/logger"
   dependencies:
