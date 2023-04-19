@@ -36,6 +36,11 @@ describe("expressHandler", () => {
     });
     const app = express();
     app.use(express.json());
+    app.use(
+      logger({
+        log: (r) => () => console.log(r),
+      })
+    );
     app.get("/greet", GreetFunction);
     await request(app).get("/greet?name=Silvia").expect(200, {
       message: "Ciao Silvia",
