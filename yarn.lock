@@ -770,7 +770,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/logger@^1.0.0, @pagopa/logger@^1.0.1, @pagopa/logger@workspace:packages/logger":
+"@pagopa/logger@^1.0.1, @pagopa/logger@workspace:packages/logger":
   version: 0.0.0-use.local
   resolution: "@pagopa/logger@workspace:packages/logger"
   dependencies:
