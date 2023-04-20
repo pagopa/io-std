@@ -4,6 +4,8 @@ dist
 .turbo
 coverage
 
+.DS_Store
+
 .pnp.*
 .yarn/*
 !.yarn/patches
