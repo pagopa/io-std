@@ -6,12 +6,21 @@ import * as RTE from "fp-ts/ReaderTaskEither";
 import { pipe, flow } from "fp-ts/function";
 import { lookup } from "fp-ts/Record";
 
-import * as H from "@pagopa/handler-kit";
-import { expressHandler } from "../express";
 import express from "express";
 import request from "supertest";
-import { logger } from "@pagopa/logger-express";
+
+import * as H from "@pagopa/handler-kit";
 import * as L from "@pagopa/logger";
+
+import * as LE from "@pagopa/logger-express";
+
+import { expressHandler } from "../express";
+
+const logger: L.Logger = {
+  log: vi.fn(() => () => {}),
+};
+
+const mocks = { logger };
 
 describe("expressHandler", () => {
   const GreetHandler = H.of((req: H.HttpRequest) =>
@@ -36,29 +45,22 @@ describe("expressHandler", () => {
     });
     const app = express();
     app.use(express.json());
-    app.use(
-      logger({
-        log: (r) => () => console.log(r),
-      })
-    );
+    app.use(LE.logger(mocks.logger));
     app.get("/greet", GreetFunction);
     await request(app).get("/greet?name=Silvia").expect(200, {
       message: "Ciao Silvia",
     });
   });
   it("recovers from uncaught errors", async () => {
-    const ConsoleLogger: L.Logger = {
-      log: vi.fn((r) => () => {}),
-    };
     const ErrorFunction = expressHandler(
       H.of((_) => RTE.left(new Error("unhandled error")))
     )({});
     const app = express();
     app.use(express.json());
-    app.use(logger(ConsoleLogger));
+    app.use(LE.logger(mocks.logger));
     app.get("/error", ErrorFunction);
     const response = await request(app).get("/error");
     expect(response.statusCode).toBe(500);
-    expect(ConsoleLogger.log).toHaveBeenCalled();
+    expect(mocks.logger.log).toHaveBeenCalled();
   });
 });

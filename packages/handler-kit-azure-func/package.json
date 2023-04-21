@@ -17,8 +17,6 @@
   "scripts": {
     "build": "tsup-node",
     "format": "prettier --write .",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage",
     "lint": "eslint \"src/**\"",
     "lint:fix": "eslint --fix \"src/**\"",
     "typecheck": "tsc"
@@ -33,11 +31,9 @@
     "@azure/functions": "^3.5.0",
     "@pagopa/eslint-config": "^3.0.0",
     "@rushstack/eslint-patch": "^1.2.0",
-    "@vitest/coverage-c8": "^0.29.2",
     "eslint": "^8.36.0",
     "prettier": "2.8.4",
     "tsup": "^6.6.3",
-    "typescript": "^5.0.2",
-    "vitest": "^0.29.2"
+    "typescript": "^5.0.2"
   }
 }

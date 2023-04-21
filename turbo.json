@@ -6,12 +6,7 @@
       "outputs": ["dist/**"],
       "dependsOn": ["^build"]
     },
-    "test": {
-      "inputs": ["src/**/*.spec.ts", "src/**/*.test.ts"],
-      "outputs": [],
-      "outputMode": "hash-only",
-      "dependsOn": ["^build"]
-    },
+    "//#test": {},
     "lint": {
       "inputs": ["src/**/*.ts"],
       "outputs": [],
