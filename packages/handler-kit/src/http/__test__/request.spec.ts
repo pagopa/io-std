@@ -70,5 +70,6 @@ describe("parseMultipart", () => {
         },
       ]);
     }
+    expect.hasAssertions();
   });
 });
