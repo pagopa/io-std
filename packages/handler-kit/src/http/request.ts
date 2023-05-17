@@ -1,5 +1,14 @@
 import * as t from "io-ts";
 
+import * as multipart from "parse-multipart";
+
+import { pipe, flow } from "fp-ts/lib/function";
+import { lookup } from "fp-ts/lib/Record";
+import { sequenceS } from "fp-ts/lib/Apply";
+import * as E from "fp-ts/lib/Either";
+
+import { HttpBadRequestError } from "./error";
+
 export const HttpRequest = t.type({
   method: t.keyof({
     GET: null,
@@ -29,3 +38,53 @@ export const request = (url: string): HttpRequest => ({
   headers: {},
   body: undefined,
 });
+
+export const multipartE = {
+  Parse: E.tryCatchK(multipart.Parse, E.toError),
+  getBoundary: E.tryCatchK(multipart.getBoundary, E.toError),
+};
+
+// TODO: write a better multipart/form-data parser
+// that parse also the meta informartion (name and other key value fields)
+export const parseMultipart = (req: HttpRequest) =>
+  pipe(
+    sequenceS(E.Apply)({
+      boundary: pipe(
+        req.headers,
+        lookup("content-type"),
+        E.fromOption(
+          () => new HttpBadRequestError("missing content-type header")
+        ),
+        E.filterOrElse(
+          (contentType) => contentType.includes("multipart/form-data"),
+          () =>
+            new HttpBadRequestError(
+              "the content-type is not multipart/form-data"
+            )
+        ),
+        E.chain(
+          flow(
+            multipartE.getBoundary,
+            E.filterOrElseW(
+              (parsedBoundary) => parsedBoundary !== "",
+              () =>
+                new HttpBadRequestError(
+                  "unable to get boundary from request header"
+                )
+            )
+          )
+        )
+      ),
+      requestBody: pipe(
+        req.body,
+        E.fromPredicate(
+          Buffer.isBuffer,
+          () =>
+            new HttpBadRequestError("invalid request body, should be a buffer")
+        )
+      ),
+    }),
+    E.chain(({ requestBody, boundary }) =>
+      multipartE.Parse(requestBody, boundary)
+    )
+  );

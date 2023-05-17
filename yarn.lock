@@ -732,9 +732,11 @@ __metadata:
     "@pagopa/eslint-config": ^3.0.0
     "@pagopa/logger": ^1.0.1
     "@rushstack/eslint-patch": ^1.2.0
+    "@types/parse-multipart": ^1.0.0
     eslint: ^8.36.0
     fp-ts: ^2.13.1
     io-ts: ^2.2.20
+    parse-multipart: ^1.0.4
     prettier: 2.8.4
     tsup: ^6.6.3
     typescript: ^5.0.2
@@ -926,6 +928,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 2cb10af2585657cd6d14d91e4319b62482c1485237f4923f24ba14737fcd2320c363c51f2271339cb5b6c17b4332c89779cdc11296de57763953f8ad18958a95
+  languageName: node
+  linkType: hard
+
+"@types/parse-multipart@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@types/parse-multipart@npm:1.0.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: 5283a2296c180f3eecefd08dbc1e94989f38321b815a8e1ba391c01d05a83779b43e86e13221f354e913628e4fd4683b49ef5cdfc1fadd037f44c785ba4f50a3
   languageName: node
   linkType: hard
 
@@ -4819,6 +4830,13 @@ __metadata:
     json-parse-even-better-errors: ^2.3.0
     lines-and-columns: ^1.1.6
   checksum: 62085b17d64da57f40f6afc2ac1f4d95def18c4323577e1eced571db75d9ab59b297d1d10582920f84b15985cbfc6b6d450ccbf317644cfa176f3ed982ad87e2
+  languageName: node
+  linkType: hard
+
+"parse-multipart@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "parse-multipart@npm:1.0.4"
+  checksum: 0ea158a6dce3ee5c263b865ec8877c12b2d8d4a7dc60fc48615620cc55e46ecdcf3e96893a0ccbd79bf30387db45aa199a6701e3b6ba38a09079f9e0f5391b1c
   languageName: node
   linkType: hard
 
