@@ -39,6 +39,11 @@ export const request = (url: string): HttpRequest => ({
   body: undefined,
 });
 
+export const multipartE = {
+  Parse: E.tryCatchK(multipart.Parse, E.toError),
+  getBoundary: E.tryCatchK(multipart.getBoundary, E.toError),
+};
+
 // TODO: write a better multipart/form-data parser
 // that parse also the meta informartion (name and other key value fields)
 export const parseMultipart = (req: HttpRequest) =>
@@ -59,8 +64,8 @@ export const parseMultipart = (req: HttpRequest) =>
         ),
         E.chain(
           flow(
-            multipart.getBoundary,
-            E.fromPredicate(
+            multipartE.getBoundary,
+            E.filterOrElseW(
               (parsedBoundary) => parsedBoundary !== "",
               () =>
                 new HttpBadRequestError(
@@ -79,5 +84,7 @@ export const parseMultipart = (req: HttpRequest) =>
         )
       ),
     }),
-    E.map(({ requestBody, boundary }) => multipart.Parse(requestBody, boundary))
+    E.chain(({ requestBody, boundary }) =>
+      multipartE.Parse(requestBody, boundary)
+    )
   );
