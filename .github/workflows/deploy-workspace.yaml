@@ -18,12 +18,18 @@ jobs:
         with:
           fetch-depth: 2
 
-      - uses: "pagopa/io-std/.github/actions/build-workspace"
+      - uses: actions/checkout@v3
+        with:
+          repository: pagopa/io-std
+          token: ${{ secrets.GH_TOKEN }}
+          path: io-std
+
+      - uses: "./io-std/.github/actions/build-workspace"
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
       - id: make_artifact
-        uses: "pagopa/io-std/.github/actions/make-workspace-artifact"
+        uses: "./io-std/.github/actions/make-workspace-artifact"
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
