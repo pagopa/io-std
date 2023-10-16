@@ -18,12 +18,12 @@ jobs:
         with:
           fetch-depth: 2
 
-      - uses: "./.github/actions/build-workspace"
+      - uses: "pagopa/io-std/.github/actions/build-workspace"
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
       - id: make_artifact
-        uses: "./.github/actions/make-workspace-artifact"
+        uses: "pagopa/io-std/.github/actions/make-workspace-artifact"
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
