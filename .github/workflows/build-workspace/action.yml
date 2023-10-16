@@ -1,0 +1,31 @@
+name: "Build workspace"
+
+inputs:
+  workspace-name:
+    required: true
+
+runs:
+  using: "composite"
+  - run: npx turbo@1.9.3 prune --scope ${{ inputs.workspace-name }}
+    shell: bash
+
+  - uses: actions/setup-node@v3
+    with:
+      node-version-file: ".node-version"
+      cache: "yarn"
+      cache-dependency-path: "./out/yarn.lock"
+
+  - run: yarn install --immutable
+    shell: bash
+    working-directory: ./out
+
+  - uses: actions/cache@v3
+    with:
+      path: ./out/node_modules/.cache/turbo
+      key: ${{ runner.os }}-turbo-${{ github.sha }}
+      restore-keys: |
+        ${{ runner.os }}-turbo-
+
+  - run: yarn build
+    shell: bash
+    working-directory: ./out
