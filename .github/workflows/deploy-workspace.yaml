@@ -14,20 +14,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout monorepo
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
-      - uses: "pagopa/io-std/build-workspace@SFEQS-2043-make-reusable-workflows"
+      - name: Build workspace
+        uses: "pagopa/io-std/build-workspace@SFEQS-2043-make-reusable-workflows"
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
-      - id: make_artifact
+      - name: Make workspace artifact
+        id: make_artifact
         uses: "pagopa/io-std/make-workspace-artifact@SFEQS-2043-make-reusable-workflows"
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload workspace artifact
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.workspace-name }}
           path: ${{ steps.make_artifact.outputs.artifact-path }}
@@ -43,17 +47,20 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Download workspace artifact
+        uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.workspace-name }}
 
-      - uses: azure/login@v1
+      - name: Login to Azure
+        uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - uses: azure/webapps-deploy@v2
+      - name: Deploy to ${{ vars.AZURE_WEB_APP_NAME }} staging slot
+        uses: azure/webapps-deploy@v2
         with:
           resource-group-name: ${{ vars.AZURE_WEB_APP_RESOURCE_GROUP }}
           app-name: ${{ vars.AZURE_WEB_APP_NAME }}

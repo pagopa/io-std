@@ -7,26 +7,31 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: npx turbo@1.9.3 prune --scope ${{ inputs.workspace-name }}
+    - name: Prune monorepo targeting ${{ inputs.workspace-name }}
+      run: npx turbo@1.9.3 prune --scope ${{ inputs.workspace-name }}
       shell: bash
 
-    - uses: actions/setup-node@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
         node-version-file: ".node-version"
         cache: "yarn"
         cache-dependency-path: "./out/yarn.lock"
 
-    - run: yarn install --immutable
+    - name: Install dependencies
+      run: yarn install --immutable
       shell: bash
       working-directory: ./out
 
-    - uses: actions/cache@v3
+    - name: Restore turbo cache
+      uses: actions/cache@v3
       with:
         path: ./out/node_modules/.cache/turbo
         key: ${{ runner.os }}-turbo-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-turbo-
 
-    - run: yarn build
+    - name: Build ${{ inputs.workspace-name }}
+      run: yarn build
       shell: bash
       working-directory: ./out

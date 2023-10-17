@@ -9,19 +9,24 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - id: detect-workspace-type
+    - name: Detect workspace type
+      id: detect-workspace-type
       run: |
         if [ -e "host.json" ]; then
+          echo "::debug:: the workspace contains an azure function app"
           echo "workspace-type=function-app" >> "$GITHUB_OUTPUT"
         elif [ -e "next.config.js" ] && grep -q 'output: "standalone"' "next.config.js"; then
+          echo "::debug:: the workspace contains a next standalone app"
           echo "workspace-type=next-standalone" >> "$GITHUB_OUTPUT"
         else
+          echo "::error:: workspace not supported (should be a azure function app or a next standalone application)"
           exit 1
         fi
       shell: bash
       working-directory: ./out/apps/${{ inputs.workspace-name }}
 
-    - if: ${{ steps.detect-workspace-type.outputs.workspace-type == 'next-standalone' }}
+    - name: Make the next standalone app artifact
+      if: ${{ steps.detect-workspace-type.outputs.workspace-type == 'next-standalone' }}
       id: make-next-standalone-artifact
       run: |
         mv .next/static .next/standalone/apps/${{ inputs.workspace-name }}/.next/
@@ -31,7 +36,8 @@ runs:
       shell: bash
       working-directory: ./out/apps/${{ inputs.workspace-name }}
 
-    - if: ${{ steps.detect-workspace-type.outputs.workspace-type == 'function-app' }}
+    - name: Make the azure function app artifact
+      if: ${{ steps.detect-workspace-type.outputs.workspace-type == 'function-app' }}
       id: make-function-app-artifact
       run: |
         npm pkg set --json "bundledDependencies"=true
