@@ -37,8 +37,8 @@ jobs:
           name: ${{ inputs.workspace-name }}
           path: ${{ steps.make_artifact.outputs.artifact-path }}
 
-  deploy:
-    name: Deploy (staging)
+  deploy_to_staging:
+    name: Staging
     if: ${{ !github.event.act }}
     needs: [build]
     runs-on: self-hosted
