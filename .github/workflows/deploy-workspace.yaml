@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout monorepo
@@ -37,6 +38,7 @@ jobs:
           path: ${{ steps.make_artifact.outputs.artifact-path }}
 
   deploy:
+    name: Deploy (staging)
     if: ${{ !github.event.act }}
     needs: [build]
     runs-on: self-hosted
