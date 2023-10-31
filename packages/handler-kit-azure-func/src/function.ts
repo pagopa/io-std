@@ -36,7 +36,7 @@ const azureFunctionTE =
       TE.map(({ input, logger }) => ({ input, logger, ...deps })),
       TE.filterOrElse(
         isHandlerEnvironment<R, I>,
-        () => new Error("Unmeet dependencies")
+        () => new Error("Unmet dependencies")
       ),
       TE.chainW(h)
     );
