@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.0
+
+### Major Changes
+
+- b229e4e: handler-kit-azure-func updated to work with the new @azure/functions programming model
+
 ## 1.2.0
 
 ### Minor Changes
