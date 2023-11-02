@@ -27,13 +27,11 @@ const azureFunctionTE =
   ) =>
   (input: unknown, ctx: InvocationContext) =>
     pipe(
-      ctx,
-      sequenceS(RE.Apply)({
-        logger: RE.fromReader(getLogger),
-        input: RE.right(input),
+      TE.right({
+        input,
+        logger: getLogger(ctx),
+        ...deps,
       }),
-      TE.fromEither,
-      TE.map(({ input, logger }) => ({ input, logger, ...deps })),
       TE.filterOrElse(
         isHandlerEnvironment<R, I>,
         () => new Error("Unmet dependencies")
