@@ -3,10 +3,8 @@ import { InvocationContext, HttpResponse } from "@azure/functions";
 import * as t from "io-ts";
 
 import * as T from "fp-ts/Task";
-import * as RE from "fp-ts/ReaderEither";
 import * as TE from "fp-ts/TaskEither";
 
-import { sequenceS } from "fp-ts/Apply";
 import { pipe, flow } from "fp-ts/function";
 
 import * as H from "@pagopa/handler-kit";
