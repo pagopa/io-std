@@ -1,50 +1,50 @@
-import * as azure from "@azure/functions";
+import { InvocationContext, HttpResponse } from "@azure/functions";
 
 import * as t from "io-ts";
 
 import * as T from "fp-ts/Task";
-import * as RE from "fp-ts/ReaderEither";
 import * as TE from "fp-ts/TaskEither";
 
-import { sequenceS } from "fp-ts/Apply";
 import { pipe, flow } from "fp-ts/function";
 
 import * as H from "@pagopa/handler-kit";
 import * as L from "@pagopa/logger";
 
 import { getLogger } from "./logger";
-import { getTriggerBindingData } from "./trigger";
 
-const hasLogger = <R, I>(
+const isHandlerEnvironment = <R, I>(
   u: unknown
-): u is R & { logger: L.Logger } & H.HandlerEnvironment<I> =>
-  typeof u === "object" && u !== null && "logger" in u;
+): u is R & H.HandlerEnvironment<I> =>
+  typeof u === "object" && u !== null && "logger" in u && "input" in u;
 
 // Populates Handler dependencies reading from azure.Context
-const azureFunctionTE = <I, A, R>(
-  h: H.Handler<I, A, R>,
-  deps: Omit<R, "logger"> & { inputDecoder: t.Decoder<unknown, I> }
-) =>
-  flow(
-    sequenceS(RE.Apply)({
-      logger: RE.fromReader(getLogger),
-      input: getTriggerBindingData(),
-    }),
-    TE.fromEither,
-    TE.map(({ input, logger }) => ({ input, logger, ...deps })),
-    TE.filterOrElse(hasLogger<R, I>, () => new Error("Unmeet dependencies")),
-    TE.chainW(h)
-  );
+const azureFunctionTE =
+  <I, A, R>(
+    h: H.Handler<I, A, R>,
+    deps: Omit<R, "logger" | "input"> & { inputDecoder: t.Decoder<unknown, I> }
+  ) =>
+  (input: unknown, ctx: InvocationContext) =>
+    pipe(
+      TE.right({
+        input,
+        logger: getLogger(ctx),
+        ...deps,
+      }),
+      TE.filterOrElse(
+        isHandlerEnvironment<R, I>,
+        () => new Error("Unmet dependencies")
+      ),
+      TE.chainW(h)
+    );
 
-// Adapts an Handler to an Azure Function that can be triggered by
-// queueTrigger, cosmosDBTrigger, eventsHubTrigger and other event-based binding
+// Adapts an Handler to an Azure Function
 export const azureFunction =
   <I, A, R>(h: H.Handler<I, A, R>) =>
   (
-    deps: Omit<R, "logger"> & { inputDecoder: t.Decoder<unknown, I> }
-  ): azure.AzureFunction =>
-  (ctx) => {
-    const result = pipe(ctx, azureFunctionTE(h, deps), TE.toUnion)();
+    deps: Omit<R, "logger" | "input"> & { inputDecoder: t.Decoder<unknown, I> }
+  ) =>
+  (input: unknown, ctx: InvocationContext) => {
+    const result = pipe(azureFunctionTE(h, deps)(input, ctx), TE.toUnion)();
     // we have to throws here to ensure that "retry" mechanism of Azure
     // can be executed
     if (result instanceof Error) {
@@ -90,11 +90,12 @@ const HttpRequestFromAzure = AzureHttpRequestC.pipe(
 
 const toAzureHttpResponse = (
   res: H.HttpResponse<unknown, H.HttpStatusCode>
-): azure.HttpResponse => ({
-  statusCode: res.statusCode,
-  body: res.body,
-  headers: res.headers,
-});
+): HttpResponse =>
+  new HttpResponse({
+    status: res.statusCode,
+    jsonBody: res.body,
+    headers: res.headers,
+  });
 
 // Prevent HTTP triggered Azure Functions from crashing
 // If an handler returns with an error (RTE.left),
@@ -118,14 +119,13 @@ export const httpAzureFunction =
   <R>(
     h: H.Handler<H.HttpRequest, H.HttpResponse<unknown, H.HttpStatusCode>, R>
   ) =>
-  (deps: Omit<R, "logger">): azure.AzureFunction =>
-  (ctx) =>
+  (deps: Omit<R, "logger" | "input">) =>
+  (input: unknown, ctx: InvocationContext) =>
     pipe(
-      ctx,
       azureFunctionTE(h, {
         ...deps,
         inputDecoder: HttpRequestFromAzure,
-      }),
+      })(input, ctx),
       TE.getOrElseW((e) =>
         logErrorAndReturnHttpResponse(e)({
           logger: getLogger(ctx),
