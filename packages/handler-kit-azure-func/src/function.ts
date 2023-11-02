@@ -25,12 +25,12 @@ const azureFunctionTE =
     h: H.Handler<I, A, R>,
     deps: Omit<R, "logger" | "input"> & { inputDecoder: t.Decoder<unknown, I> }
   ) =>
-  (messages: unknown, ctx: InvocationContext) =>
+  (input: unknown, ctx: InvocationContext) =>
     pipe(
       ctx,
       sequenceS(RE.Apply)({
         logger: RE.fromReader(getLogger),
-        input: RE.right(messages),
+        input: RE.right(input),
       }),
       TE.fromEither,
       TE.map(({ input, logger }) => ({ input, logger, ...deps })),
@@ -47,8 +47,8 @@ export const azureFunction =
   (
     deps: Omit<R, "logger" | "input"> & { inputDecoder: t.Decoder<unknown, I> }
   ) =>
-  (messages: unknown, ctx: InvocationContext) => {
-    const result = pipe(azureFunctionTE(h, deps)(messages, ctx), TE.toUnion)();
+  (input: unknown, ctx: InvocationContext) => {
+    const result = pipe(azureFunctionTE(h, deps)(input, ctx), TE.toUnion)();
     // we have to throws here to ensure that "retry" mechanism of Azure
     // can be executed
     if (result instanceof Error) {
@@ -124,12 +124,12 @@ export const httpAzureFunction =
     h: H.Handler<H.HttpRequest, H.HttpResponse<unknown, H.HttpStatusCode>, R>
   ) =>
   (deps: Omit<R, "logger" | "input">) =>
-  (messages: unknown, ctx: InvocationContext) =>
+  (input: unknown, ctx: InvocationContext) =>
     pipe(
       azureFunctionTE(h, {
         ...deps,
         inputDecoder: HttpRequestFromAzure,
-      })(messages, ctx),
+      })(input, ctx),
       TE.getOrElseW((e) =>
         logErrorAndReturnHttpResponse(e)({
           logger: getLogger(ctx),
