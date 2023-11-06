@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.1
+
+### Patch Changes
+
+- 9aaf7af: Updated getLogger function
+
 ## 2.0.0
 
 ### Major Changes
