@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - handler-kit-azure-func-1.x
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
