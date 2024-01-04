@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 1.2.1
+
+### Patch Changes
+
+- b797cc9: fix(azureFunction): await for handler result in order to throws on error
+
 ## 1.2.0
 
 ### Minor Changes
