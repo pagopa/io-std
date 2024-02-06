@@ -13,6 +13,10 @@ Create a workflow `.yml` file in your repository's `.github/workflows` directory
 ### Inputs
 
 - `workspace-name` the name of the workspace. must match the name of the folder containing it (`/apps/{workspace-name}`)
+- `workspace-type` (optional )the type of the workspace, indicating the kind of artifact to build. If not provided, the action will try to infer it from the workspace's content. Supported types:
+  - `function-app` Azure Function App
+  - `next-standalone` Standalone Next.js application
+  - `package` a package to be published to NPM or compatible registry
 
 ### Outputs
 
@@ -44,6 +48,8 @@ jobs:
         with:
           # it lives in /apps/my-workspace
           workspace-name: my-workspace
+          # optional
+          workspace-type: package
 
       - uses: actions/upload-artifact@v3
         with:
