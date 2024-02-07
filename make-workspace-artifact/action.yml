@@ -1,18 +1,30 @@
 name: "Make workspace artifact"
+description: "This action creates an artifact for the selected workspace."
 
 inputs:
   workspace-name:
+    description: The name of the workspace to create the artifact for"
     required: true
+  workspace-type:
+    description: |
+      The type of the workspace to create the artifact for.
+      Will be inferred if not provided.
+      The supported workspace types are: function-app, next-standalone, package
+    required: false
 outputs:
   artifact-path:
+    description: The path to the created artifact
     value: ${{ steps[format('make-{0}-artifact', steps.detect-workspace-type.outputs.workspace-type)].outputs.artifact-path }}
 runs:
   using: "composite"
   steps:
-    - name: Detect workspace type
-      id: detect-workspace-type
+    # If not provided, try to detect the type of the workspace from its content.
+    - name: Set workspace type
+      id: set-workspace-type
       run: |
-        if [ -e "host.json" ]; then
+        if [[-n "${{ inputs.workspace-type }}" ]]; then
+          echo "workspace-type=${{ inputs.workspace-type }}" >> "$GITHUB_OUTPUT"
+        elif [ -e "host.json" ]; then
           echo "::debug:: the workspace contains an azure function app"
           echo "workspace-type=function-app" >> "$GITHUB_OUTPUT"
         elif [ -e "next.config.js" ] && grep -q 'output: "standalone"' "next.config.js"; then
@@ -44,5 +56,17 @@ runs:
         npm pkg set --json "files"='["**/function.json", "dist", "host.json","extensions.csproj"]'
         npx npm-pack-zip
         echo "artifact-path=$(realpath ${{ inputs.workspace-name }}.zip)" >> "$GITHUB_OUTPUT"
+      shell: bash
+      working-directory: ./out/apps/${{ inputs.workspace-name }}
+
+    - name: Make the package artifact
+      if: ${{ steps.detect-workspace-type.outputs.workspace-type == 'package' }}
+      id: make-package-artifact
+      run: |
+        # Bundle a package tarball for the selected workspace.
+        # The tarball will be created in the root of the workspace.
+        # The filename already contains the extension .
+        filename=$(npm pack --workspace ${{ inputs.workspace-name }} | jq -r '.[0].filename')
+        echo "artifact-path=$(realpath $filename)" >> "$GITHUB_OUTPUT"
       shell: bash
       working-directory: ./out/apps/${{ inputs.workspace-name }}
