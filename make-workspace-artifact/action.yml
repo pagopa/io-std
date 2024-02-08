@@ -22,7 +22,7 @@ runs:
     - name: Set workspace type
       id: set-workspace-type
       run: |
-        if [[-n "${{ inputs.workspace-type }}" ]]; then
+        if [ -n "${{ inputs.workspace-type }}" ]; then
           echo "workspace-type=${{ inputs.workspace-type }}" >> "$GITHUB_OUTPUT"
         elif [ -e "host.json" ]; then
           echo "::debug:: the workspace contains an azure function app"
