@@ -20,7 +20,7 @@ runs:
   steps:
     # If not provided, try to detect the type of the workspace from its content.
     - name: Set workspace type
-      id: set-workspace-type
+      id: detect-workspace-type
       run: |
         if [ -n "${{ inputs.workspace-type }}" ]; then
           echo "workspace-type=${{ inputs.workspace-type }}" >> "$GITHUB_OUTPUT"
