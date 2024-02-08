@@ -18,7 +18,7 @@ outputs:
 runs:
   using: "composite"
   steps:
-    # Se the workspace type to the provided value.
+    # Set the workspace type to the provided value.
     # If not provided, try to detect the type of the workspace from its content.
     # If the workspace is neither found or supported, fail the action
     - name: Set workspace type
