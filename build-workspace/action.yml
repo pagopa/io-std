@@ -9,7 +9,7 @@ runs:
   steps:
     - name: Prune monorepo targeting ${{ inputs.workspace-name }}
       run: |
-        turbo_version=$(echo `node -p "require('./package.json').devDependencies.turbo"`) 
+        turbo_version=$(yarn info turbo --json | jq -r '.children.Version')
         echo "::debug:: using turbo@$turbo_version"
         npx turbo@$turbo_version prune --scope ${{ inputs.workspace-name }}
       shell: bash
