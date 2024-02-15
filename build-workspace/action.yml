@@ -18,12 +18,6 @@ runs:
         cache: "yarn"
         cache-dependency-path: "./out/yarn.lock"
 
-    - name: Enable Corepack
-      run: |
-        corepack enable
-        yarn --version
-      shell: bash
-
     - name: Install dependencies
       run: yarn install --immutable
       shell: bash
