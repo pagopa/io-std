@@ -18,22 +18,30 @@ outputs:
 runs:
   using: "composite"
   steps:
+    # Set the workspace type to the provided value.
     # If not provided, try to detect the type of the workspace from its content.
+    # If the workspace is neither found or supported, fail the action
     - name: Set workspace type
       id: detect-workspace-type
       run: |
-        if [ -n "${{ inputs.workspace-type }}" ]; then
-          echo "workspace-type=${{ inputs.workspace-type }}" >> "$GITHUB_OUTPUT"
+        wst=""
+        if [[ -n "${{ inputs.workspace-type }}" ]]; then
+          wst="${{ inputs.workspace-type }}"
         elif [ -e "host.json" ]; then
           echo "::debug:: the workspace contains an azure function app"
-          echo "workspace-type=function-app" >> "$GITHUB_OUTPUT"
+          wst="function-app"
         elif [ -e "next.config.js" ] && grep -q 'output: "standalone"' "next.config.js"; then
           echo "::debug:: the workspace contains a next standalone app"
-          echo "workspace-type=next-standalone" >> "$GITHUB_OUTPUT"
-        else
-          echo "::error:: workspace not supported (should be a azure function app or a next standalone application)"
+          wst="next-standalone"
+        fi
+
+        supported_types=("function-app" "next-standalone" "package")
+        if ! [[ ${supported_types[@]} =~ $wst ]]; then
+          echo "::error:: workspace type not supported. The supported workspace types are: $supported_types. Received: $wst"
           exit 1
         fi
+
+        echo "workspace-type=${{ inputs.workspace-type }}" >> "$GITHUB_OUTPUT"
       shell: bash
       working-directory: ./out/apps/${{ inputs.workspace-name }}
 
