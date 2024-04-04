@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.2
+
+### Patch Changes
+
+- dd02a78: azure/functions is now a dependency
+
 ## 2.0.1
 
 ### Patch Changes
