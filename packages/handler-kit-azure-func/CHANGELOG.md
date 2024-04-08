@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.3
+
+### Patch Changes
+
+- 70744d6: Now HttpRequest from @azure/functions@4 is parsed correctly
+
 ## 2.0.2
 
 ### Patch Changes
