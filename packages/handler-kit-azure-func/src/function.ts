@@ -1,4 +1,4 @@
-import { InvocationContext, HttpResponse } from "@azure/functions";
+import { InvocationContext, HttpRequest, HttpResponse } from "@azure/functions";
 
 import * as t from "io-ts";
 
@@ -120,12 +120,29 @@ export const httpAzureFunction =
     h: H.Handler<H.HttpRequest, H.HttpResponse<unknown, H.HttpStatusCode>, R>
   ) =>
   (deps: Omit<R, "logger" | "input">) =>
-  (input: unknown, ctx: InvocationContext) =>
+  (request: HttpRequest, ctx: InvocationContext) =>
     pipe(
-      azureFunctionTE(h, {
-        ...deps,
-        inputDecoder: HttpRequestFromAzure,
-      })(input, ctx),
+      TE.tryCatch(
+        () => request.json(),
+        () => new Error("The request body is not a valid JSON.")
+      ),
+      TE.orElse(() => TE.right<Error, unknown>(undefined)),
+      TE.chain((body) =>
+        azureFunctionTE(h, {
+          ...deps,
+          inputDecoder: HttpRequestFromAzure,
+        })(
+          {
+            body,
+            url: request.url,
+            params: request.params,
+            headers: Object.fromEntries(request.headers.entries()),
+            query: Object.fromEntries(request.query.entries()),
+            method: request.method,
+          },
+          ctx
+        )
+      ),
       TE.getOrElseW((e) =>
         logErrorAndReturnHttpResponse(e)({
           logger: getLogger(ctx),
