@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 
 import * as t from "io-ts";
 
-import { InvocationContext } from "@azure/functions";
+import { InvocationContext, HttpRequest } from "@azure/functions";
 
 import * as O from "fp-ts/Option";
 import * as RTE from "fp-ts/ReaderTaskEither";
@@ -13,26 +13,6 @@ import { lookup } from "fp-ts/Record";
 import * as H from "@pagopa/handler-kit";
 
 import { azureFunction, httpAzureFunction } from "../function";
-
-const HttpRequest = (req: {
-  method?: "GET" | "POST";
-  url?: string;
-  query?: Record<string, string>;
-  params?: Record<string, string>;
-  headers?: Record<string, string>;
-  body?: unknown;
-}) => ({
-  user: null,
-  get: () => undefined,
-  parseFormBody: () => ({} as unknown),
-  body: undefined,
-  headers: {},
-  params: {},
-  query: {},
-  url: "https://my-test.url.com/api",
-  method: "GET",
-  ...req,
-});
 
 const ctx = {
   error: console.error,
@@ -61,10 +41,12 @@ describe("httpAzureFunction", () => {
     const GreetFunction = httpAzureFunction(GreetHandler)({
       lang: "it",
     });
-    const message = HttpRequest({
+    const message = new HttpRequest({
       query: {
         name: "luca",
       },
+      url: "https://my-request.pagopa.it",
+      method: "GET",
     });
     const response = await GreetFunction(message, ctx);
     expect(response.json()).resolves.toEqual(
@@ -79,7 +61,13 @@ describe("httpAzureFunction", () => {
     const ErrorFunction = httpAzureFunction(
       H.of((_) => RTE.left(new Error("unhandled error")))
     )({});
-    const response = await ErrorFunction({}, ctx);
+    const response = await ErrorFunction(
+      new HttpRequest({
+        url: "http://my-request.pagopa.it/",
+        method: "GET",
+      }),
+      ctx
+    );
     expect(CtxErrorSpy).toHaveBeenCalled();
     expect(response.json()).resolves.toEqual(
       expect.objectContaining({
