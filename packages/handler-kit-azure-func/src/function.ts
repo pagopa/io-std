@@ -43,8 +43,11 @@ export const azureFunction =
   (
     deps: Omit<R, "logger" | "input"> & { inputDecoder: t.Decoder<unknown, I> }
   ) =>
-  (input: unknown, ctx: InvocationContext) => {
-    const result = pipe(azureFunctionTE(h, deps)(input, ctx), TE.toUnion)();
+  async (input: unknown, ctx: InvocationContext) => {
+    const result = await pipe(
+      azureFunctionTE(h, deps)(input, ctx),
+      TE.toUnion
+    )();
     // we have to throws here to ensure that "retry" mechanism of Azure
     // can be executed
     if (result instanceof Error) {
