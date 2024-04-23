@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.4
+
+### Patch Changes
+
+- c0cac48: await for handler result in order to throws on error
+
 ## 2.0.3
 
 ### Patch Changes
