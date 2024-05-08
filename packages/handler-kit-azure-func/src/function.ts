@@ -91,14 +91,41 @@ const HttpRequestFromAzure = AzureHttpRequestC.pipe(
   "HttpRequestFromAzure"
 );
 
-const toAzureHttpResponse = (
-  res: H.HttpResponse<unknown, H.HttpStatusCode>
-): HttpResponse =>
-  new HttpResponse({
-    status: res.statusCode,
-    jsonBody: res.body,
-    headers: res.headers,
-  });
+const toAzureHttpResponse: ({
+  statusCode,
+  body,
+  headers,
+}: H.HttpResponse<unknown, H.HttpStatusCode>) => HttpResponse = ({
+  statusCode,
+  body,
+  headers,
+}) => {
+  // If the content-type is json or problem+json, we use jsonBody which will be JSON-serialized
+  if (
+    headers["Content-Type"] === "application/json" ||
+    headers["Content-Type"] === "application/problem+json"
+  ) {
+    return new HttpResponse({
+      status: statusCode,
+      jsonBody: body,
+      headers,
+    });
+  }
+  // In other cases, we use the 'body' property
+  return typeof body === "string"
+    ? new HttpResponse({
+        status: statusCode,
+        body,
+        headers,
+      })
+    : new HttpResponse({
+        status: 500,
+        body: "Internal server error",
+        headers: {
+          "Content-Type": "application/problem+json",
+        },
+      });
+};
 
 // Prevent HTTP triggered Azure Functions from crashing
 // If an handler returns with an error (RTE.left),
