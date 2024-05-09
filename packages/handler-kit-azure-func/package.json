@@ -1,6 +1,6 @@
 {
   "name": "@pagopa/handler-kit-azure-func",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "homepage": "https://github.com/pagopa/io-std#readme",
   "bugs": {
     "url": "https://github.com/pagopa/io-std/issues"
