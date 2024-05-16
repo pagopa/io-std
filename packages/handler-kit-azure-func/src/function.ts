@@ -81,7 +81,7 @@ const AzureHttpRequestC = t.type({
   params: t.record(t.string, t.string),
   query: t.record(t.string, t.string),
   headers: t.record(t.string, t.string),
-  body: t.unknown,
+  body: t.any,
 });
 
 type AzureHttpRequest = t.TypeOf<typeof AzureHttpRequestC>;
@@ -111,11 +111,22 @@ const toAzureHttpResponse: ({
       headers,
     });
   }
+
   // In other cases, we use the 'body' property
+  if (typeof body === "string" || body === null) {
+    return new HttpResponse({
+      status: statusCode,
+      body,
+      headers,
+    });
+  }
+
   return new HttpResponse({
-    status: statusCode,
-    body: body as undefined,
-    headers,
+    status: 500,
+    body: "Internal server error. Body is not a string, object or null.",
+    headers: {
+      "Content-Type": "application/problem+json",
+    },
   });
 };
 
