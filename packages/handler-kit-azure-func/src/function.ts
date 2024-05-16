@@ -112,19 +112,11 @@ const toAzureHttpResponse: ({
     });
   }
   // In other cases, we use the 'body' property
-  return typeof body === "string"
-    ? new HttpResponse({
-        status: statusCode,
-        body,
-        headers,
-      })
-    : new HttpResponse({
-        status: 500,
-        body: "Internal server error",
-        headers: {
-          "Content-Type": "application/problem+json",
-        },
-      });
+  return new HttpResponse({
+    status: statusCode,
+    body: body as undefined,
+    headers,
+  });
 };
 
 // Prevent HTTP triggered Azure Functions from crashing

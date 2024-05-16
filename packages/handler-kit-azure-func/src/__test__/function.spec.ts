@@ -75,58 +75,6 @@ describe("httpAzureFunction", () => {
       })
     );
   });
-
-  it("it should return 200 and a string body when the handler returns a response with Content-Type equal to application/entity-statement+jwt and a string body", async () => {
-    const handler = H.of(() =>
-      pipe(
-        RTE.of("jwt"),
-        RTE.map(
-          flow(
-            H.success,
-            H.withHeader("Content-Type", "application/entity-statement+jwt")
-          )
-        ),
-        RTE.orElseW(flow(H.toProblemJson, H.problemJson, RTE.right))
-      )
-    );
-    const message = new HttpRequest({
-      url: "https://my-request.pagopa.it",
-      method: "GET",
-    });
-    const response = await httpAzureFunction(handler)({})(message, ctx);
-
-    expect(response.status).toEqual(200);
-    expect(response.headers.get("content-type")).toEqual(
-      "application/entity-statement+jwt"
-    );
-    await expect(response.text()).resolves.toEqual("jwt");
-  });
-
-  it("it should return 500 when the handler returns a response with Content-Type equal to application/entity-statement+jwt but an object body", async () => {
-    const handler = H.of(() =>
-      pipe(
-        RTE.of({ jwt: "jwt" }),
-        RTE.map(
-          flow(
-            H.success,
-            H.withHeader("Content-Type", "application/entity-statement+jwt")
-          )
-        ),
-        RTE.orElseW(flow(H.toProblemJson, H.problemJson, RTE.right))
-      )
-    );
-    const message = new HttpRequest({
-      url: "https://my-request.pagopa.it",
-      method: "GET",
-    });
-    const response = await httpAzureFunction(handler)({})(message, ctx);
-
-    expect(response.status).toEqual(500);
-    expect(response.headers.get("content-type")).toEqual(
-      "application/problem+json"
-    );
-    await expect(response.text()).resolves.toEqual("Internal server error");
-  });
 });
 
 describe("azureFunction", () => {
