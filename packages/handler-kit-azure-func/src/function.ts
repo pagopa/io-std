@@ -123,7 +123,7 @@ const toAzureHttpResponse: ({
 
   return new HttpResponse({
     status: 500,
-    body: "Internal server error. Body is not a string, object or null.",
+    body: "Internal server error",
     headers: {
       "Content-Type": "application/problem+json",
     },
