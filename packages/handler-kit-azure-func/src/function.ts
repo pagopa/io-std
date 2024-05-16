@@ -81,7 +81,7 @@ const AzureHttpRequestC = t.type({
   params: t.record(t.string, t.string),
   query: t.record(t.string, t.string),
   headers: t.record(t.string, t.string),
-  body: t.any,
+  body: t.unknown,
 });
 
 type AzureHttpRequest = t.TypeOf<typeof AzureHttpRequestC>;
