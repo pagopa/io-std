@@ -115,6 +115,23 @@ describe("httpAzureFunction", () => {
     );
     await expect(response.text()).resolves.toEqual("Internal server error");
   });
+
+  it("it should return 204 and an empty body when the handler returns a response with NoContent body", async () => {
+    const handler = H.of(() =>
+      pipe(
+        RTE.of(H.empty),
+        RTE.orElseW(flow(H.toProblemJson, H.problemJson, RTE.right))
+      )
+    );
+    const message = new HttpRequest({
+      url: "https://my-request.pagopa.it",
+      method: "GET",
+    });
+    const response = await httpAzureFunction(handler)({})(message, ctx);
+
+    expect(response.status).toEqual(204);
+    expect(response.body).toBe(null);
+  });
 });
 
 describe("azureFunction", () => {
