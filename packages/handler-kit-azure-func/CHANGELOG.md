@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.7
+
+### Patch Changes
+
+- d7663e5: Fixed 204 NoContent response
+
 ## 2.0.5
 
 ### Patch Changes
