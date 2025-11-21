@@ -29,6 +29,10 @@
     "fp-ts": "^2.13.1",
     "io-ts": "^2.2.20"
   },
+  "peerDependencies": {
+    "fp-ts": "^2.13.1",
+    "io-ts": "^2.2.20"
+  },
   "devDependencies": {
     "@pagopa/eslint-config": "^3.0.0",
     "@rushstack/eslint-patch": "^1.2.0",
