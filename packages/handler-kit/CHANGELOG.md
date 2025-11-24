@@ -1,5 +1,11 @@
 # @pagopa/handler-kit
 
+## 1.1.1
+
+### Patch Changes
+
+- 1348f37: Define io-ts and fp-ts as peerDependencies
+
 ## 1.1.0
 
 ### Minor Changes
