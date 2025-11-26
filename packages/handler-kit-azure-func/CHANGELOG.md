@@ -1,5 +1,11 @@
 # @pagopa/handler-kit-azure-func
 
+## 2.0.8
+
+### Patch Changes
+
+- b6758f1: set io-ts and fp-ts as peerDependencies in handler-kit-azure-func
+
 ## 2.0.7
 
 ### Patch Changes
