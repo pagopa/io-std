@@ -23,8 +23,12 @@
   },
   "dependencies": {
     "@azure/functions": "^4.0.1",
-    "@pagopa/handler-kit": "^1.0.1",
+    "@pagopa/handler-kit": "^1.1.1",
     "@pagopa/logger": "^1.0.1",
+    "fp-ts": "^2.13.1",
+    "io-ts": "^2.2.20"
+  },
+  "peerDependencies": {
     "fp-ts": "^2.13.1",
     "io-ts": "^2.2.20"
   },
