@@ -697,7 +697,7 @@ __metadata:
   dependencies:
     "@azure/functions": ^4.0.1
     "@pagopa/eslint-config": ^3.0.0
-    "@pagopa/handler-kit": ^1.0.1
+    "@pagopa/handler-kit": ^1.1.1
     "@pagopa/logger": ^1.0.1
     "@rushstack/eslint-patch": ^1.2.0
     eslint: ^8.36.0
@@ -706,6 +706,9 @@ __metadata:
     prettier: 2.8.4
     tsup: ^6.6.3
     typescript: ^5.0.2
+  peerDependencies:
+    fp-ts: ^2.13.1
+    io-ts: ^2.2.20
   languageName: unknown
   linkType: soft
 
@@ -731,7 +734,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pagopa/handler-kit@^1.0.1, @pagopa/handler-kit@workspace:packages/handler-kit":
+"@pagopa/handler-kit@^1.0.1, @pagopa/handler-kit@^1.1.1, @pagopa/handler-kit@workspace:packages/handler-kit":
   version: 0.0.0-use.local
   resolution: "@pagopa/handler-kit@workspace:packages/handler-kit"
   dependencies:
