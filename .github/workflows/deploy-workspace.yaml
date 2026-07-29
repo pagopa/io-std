@@ -16,23 +16,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout monorepo
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
         with:
           fetch-depth: 2
 
       - name: Build workspace
-        uses: "pagopa/io-std/build-workspace@main"
+        uses: "pagopa/io-std/build-workspace@8fb52816f63e6608f1fa972ffc2ab44c2306448c" # main
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
       - name: Make workspace artifact
         id: make_artifact
-        uses: "pagopa/io-std/make-workspace-artifact@main"
+        uses: "pagopa/io-std/make-workspace-artifact@8fb52816f63e6608f1fa972ffc2ab44c2306448c" # main
         with:
           workspace-name: ${{ inputs.workspace-name }}
 
       - name: Upload workspace artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3
         with:
           name: ${{ inputs.workspace-name }}
           path: ${{ steps.make_artifact.outputs.artifact-path }}
@@ -50,19 +50,19 @@ jobs:
 
     steps:
       - name: Download workspace artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
         with:
           name: ${{ inputs.workspace-name }}
 
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@cb79c773a3cfa27f31f25eb3f677781210c9ce3d # v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Deploy to ${{ vars.AZURE_WEB_APP_NAME }} staging slot
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@5cfb776471c748b351e1ebf5770e208a54ace016 # v2
         with:
           resource-group-name: ${{ vars.AZURE_WEB_APP_RESOURCE_GROUP }}
           app-name: ${{ vars.AZURE_WEB_APP_NAME }}
